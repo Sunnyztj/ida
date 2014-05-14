@@ -1,0 +1,28 @@
+@media (min-width: 992px) {
+}
+
+@media (min-width: 768px) {
+}
+
+@media (max-width: 991px) {
+  .font-2xlarge { font-size:26px !important; }
+  .font-3xlarge { font-size:32px !important; }
+  .font-4xlarge { font-size:38px !important; }
+  .font-5xlarge { font-size:46px !important; }
+}
+@media (max-width: 767px) {
+  #main { padding-bottom: 0; }
+  .container { padding: 0; }
+  .font-medium { font-size:15px !important; }
+  .font-large { font-size:17px !important; }
+  .font-xlarge { font-size:20px !important; }
+  .font-2xlarge { font-size:24px !important; }
+  .font-3xlarge { font-size:28px !important; }
+  .font-4xlarge { font-size:32px !important; }
+  .font-5xlarge { font-size:38px !important; }
+  .row {
+    margin-bottom: 0;
+    overflow-x: hidden;
+    & > div[class*="col-"] { margin-bottom: $gutter; }
+  }
+}

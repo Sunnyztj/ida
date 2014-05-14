@@ -1,0 +1,63 @@
+#! /bin/bash
+ 
+### BEGIN INIT INFO
+# Provides:          delayed job
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the delayed job service
+# Description:       starts delayed job
+### END INIT INFO
+ 
+USER="deploy"
+DAEMON=sphinx
+PROJECT_PATH="<%= deploy_to %>/current"
+DESC="Sphinx job app for $USER"
+
+export RAILS_ENV=production
+CD_TO_APP_DIR="cd $PROJECT_PATH"
+case "$1" in
+  start)
+        echo -n "Starting $DESC: "
+        if [ `whoami` = root ]; then
+          su - $USER -c "$CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:start"
+        else
+          $CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:start
+        fi
+        echo "$NAME."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        if [ `whoami` = root ]; then
+          su - $USER -c "$CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:stop"
+        else
+          $CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:stop
+        fi
+        echo "$NAME."
+        ;;
+  restart)
+        echo -n "Restarting $DESC: "
+        if [ `whoami` = root ]; then
+          su - $USER -c "$CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:restart"
+        else
+          $CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:restart
+        fi
+        echo "$NAME."
+        ;;
+  reindex)
+        echo -n "Reloading $DESC configuration: "
+        if [ `whoami` = root ]; then
+          su - $USER -c "$CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:index"
+        else
+          $CD_TO_APP_DIR > /dev/null 2>&1 && bundle exec rake ts:index
+        fi
+        echo "$NAME."
+        ;;
+  *)
+        echo "Usage: $NAME {start|stop|restart|reindex}" >&2
+        exit 1
+        ;;
+esac
+ 
+exit 0

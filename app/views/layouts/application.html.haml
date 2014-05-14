@@ -1,0 +1,12 @@
+!!!
+- html_tag class: 'no-js', lang: 'en' do
+  = render 'head'
+  %body{ class: "#{ controller.controller_name }" }
+    #main
+      = render 'chromeframe'
+      = render 'header'
+      = yield
+    = render 'footer'
+
+    = render 'javascripts'
+    = yield :js
